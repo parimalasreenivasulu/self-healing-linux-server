@@ -31,5 +31,5 @@ grep -oP 'Failed password .* from \K[0-9]+(\.[0-9]+){3}' "$AUTH_LOG" 2>/dev/null
         continue
       fi
       nft add element inet healer blacklist "{ $ip }"
-      log WARN "BANNED $ip ($count failed logins)"
+      log WARN "BANNED $ip ($count failed logins)"; "$BASE_DIR/bin/alert.sh" "BANNED $ip after $count failed SSH logins"
     done

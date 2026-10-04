@@ -20,9 +20,9 @@ while read -r svc; do
   if systemctl restart "$svc"; then
     sleep 2
     if systemctl is-active --quiet "$svc"; then
-      log INFO "RECOVERED: $svc is running again"
+      log INFO "RECOVERED: $svc is running again"; "$BASE_DIR/bin/alert.sh" "RECOVERED: $svc was down and has been restarted"
     else
-      log ERROR "FAILED to recover: $svc"
+      log ERROR "FAILED to recover: $svc"; "$BASE_DIR/bin/alert.sh" "FAILED to recover: $svc"
     fi
   else
     log ERROR "restart command failed for: $svc"
