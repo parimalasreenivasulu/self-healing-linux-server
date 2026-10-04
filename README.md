@@ -12,7 +12,6 @@ Built with Bash, systemd and nftables on Ubuntu (WSL2).
 - Runs automatically through systemd timers
 - Logs every check, repair and ban
 
-![Dashboard](dashboard/screenshot.png)
 
 ## Project structure
 
