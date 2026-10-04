@@ -1,0 +1,6 @@
+[Unit]
+Description=Self-healing server check and repair
+
+[Service]
+Type=oneshot
+ExecStart=/home/parimparim/self-healing-server/bin/heal.sh
