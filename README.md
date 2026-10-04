@@ -1,41 +1,42 @@
-cd ~/self-healing-server
-cat > README.md <<'EOF'
 # Self-Healing Linux Server
 
 A Linux server that monitors itself, detects failures, and repairs them automatically.
-Built with Bash and systemd on Ubuntu (WSL2).
+Built with Bash, systemd and nftables on Ubuntu (WSL2).
 
 ## Features
 
 - Monitors CPU, memory, disk usage and service status
 - Calculates a health score from 0 to 100
 - Automatically restarts crashed services (nginx, ssh)
-- Runs every 30 seconds using a systemd timer
-- Logs every check and every repair
+- Blocks IPs with repeated failed SSH logins using an nftables blacklist
+- Runs automatically through systemd timers
+- Logs every check, repair and ban
 
 ## Project structure
 
     bin/healthcheck.sh    checks resources and services, writes the health score
     bin/heal.sh           restarts failed services and confirms recovery
-    config/healer.conf    thresholds and the list of monitored services
-    systemd/              healer.service and healer.timer
-    logs/                 health.log and heal.log (not committed)
+    bin/ban_ips.sh        bans IPs with too many failed SSH logins
+    config/healer.conf    thresholds and monitored services
+    systemd/              healer and banner service and timer files
+    logs/                 runtime logs (not committed)
 
 ## How it works
 
-1. The systemd timer starts healer.service every 30 seconds.
-2. heal.sh runs healthcheck.sh.
-3. If a service is down, heal.sh restarts it and logs RECOVERED or FAILED.
+1. healer.timer starts healer.service every 30 seconds, which runs heal.sh.
+2. heal.sh runs healthcheck.sh and restarts any service that is down.
+3. banner.timer runs ban_ips.sh every minute, which reads /var/log/auth.log
+   and adds repeat offenders to the nftables blacklist.
 
 ## Setup
 
-    sudo apt install -y nginx openssh-server
+    sudo apt install -y nginx openssh-server nftables
     chmod +x bin/*.sh
-    sudo cp systemd/healer.* /etc/systemd/system/
+    sudo cp systemd/*.service systemd/*.timer /etc/systemd/system/
     sudo systemctl daemon-reload
-    sudo systemctl enable --now healer.timer
+    sudo systemctl enable --now healer.timer banner.timer
 
-Edit the ExecStart path in healer.service to match where you cloned the project.
+Edit the ExecStart paths in the service files to match where you cloned the project.
 
 ## Demo
 
@@ -48,13 +49,9 @@ Within 30 seconds the log shows nginx restarted and recovered.
 
 - [x] Health check and health score
 - [x] Automatic service recovery
-- [x] systemd timer
-- [ ] SSH brute-force IP blocker
+- [x] systemd timers
+- [x] SSH brute-force IP blocker
 - [ ] Telegram alerts
 - [ ] Live dashboard
 - [ ] Chaos testing script
 - [ ] Daily incident report
-EOF
-git add README.md
-git commit -m "Add README"
-git push
