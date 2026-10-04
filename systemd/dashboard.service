@@ -1,0 +1,11 @@
+[Unit]
+Description=Self-healing server dashboard
+After=network.target
+
+[Service]
+User=parimparim
+ExecStart=/usr/bin/python3 /home/parimparim/self-healing-server/dashboard/server.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

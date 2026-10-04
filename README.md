@@ -51,7 +51,7 @@ Within 30 seconds the log shows nginx restarted and recovered.
 - [x] Automatic service recovery
 - [x] systemd timers
 - [x] SSH brute-force IP blocker
-- [ ] Telegram alerts
-- [ ] Live dashboard
-- [ ] Chaos testing script
-- [ ] Daily incident report
+- [x] Telegram alerts
+- [x] Live dashboard
+- [x] Chaos testing script
+- [x] Daily incident report
