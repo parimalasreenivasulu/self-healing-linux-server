@@ -1,0 +1,24 @@
+INCIDENT REPORT for 2026-10-04
+========================
+Health checks run:        325
+Service failures seen:    10
+Successful recoveries:    7
+Failed recoveries:        0
+0
+IPs banned:               2
+
+--- Recoveries ---
+2026-10-04 11:24:38 [INFO] RECOVERED: nginx is running again
+2026-10-04 11:24:40 [INFO] RECOVERED: ssh is running again
+2026-10-04 11:27:44 [INFO] RECOVERED: ssh is running again
+2026-10-04 11:31:21 [INFO] RECOVERED: nginx is running again
+2026-10-04 13:58:01 [INFO] RECOVERED: nginx is running again
+2026-10-04 14:00:04 [INFO] RECOVERED: nginx is running again
+2026-10-04 14:07:14 [INFO] RECOVERED: nginx is running again
+
+--- Bans ---
+2026-10-04 12:51:52 [WARN] BANNED 203.0.113.5 (6 failed logins)
+2026-10-04 12:54:10 [WARN] BANNED 203.0.113.5 (6 failed logins)
+
+--- Lowest health score ---
+60

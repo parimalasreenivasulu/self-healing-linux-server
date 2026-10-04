@@ -1,0 +1,7 @@
+[Unit]
+Description=Daily incident report
+
+[Service]
+Type=oneshot
+User=parimparim
+ExecStart=/home/parimparim/self-healing-server/bin/report.sh
