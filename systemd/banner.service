@@ -1,0 +1,6 @@
+[Unit]
+Description=Ban IPs with repeated failed SSH logins
+
+[Service]
+Type=oneshot
+ExecStart=/home/parimparim/self-healing-server/bin/ban_ips.sh
